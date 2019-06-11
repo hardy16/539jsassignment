@@ -67,6 +67,7 @@ document.onkeydown = function (e) {
     } else if (iKeyCode == 40) {
         //DOWN arrow
         penDown = true;
+		setPosition(e);
     }
 };
 //NOTE: this function could be combined for the other keys. However in that case
