@@ -32,6 +32,13 @@ document.addEventListener("mousemove", draw);
 document.addEventListener("mousedown", setPosition);
 document.addEventListener("mouseenter", setPosition);
 
+document.addEventListener("touchstart", draw);
+
+document.addEventListener("touchmove", setPosition);
+document.addEventListener("touchmove", setPosition);
+
+
+
 // last known position
 var pos = { x: 0, y: 0 };
 
