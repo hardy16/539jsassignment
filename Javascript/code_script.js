@@ -32,23 +32,23 @@ document.addEventListener("mousemove", draw);
 document.addEventListener("mousedown", setPosition);
 document.addEventListener("mouseenter", setPosition);
 
-document.addEventListener("touchstart", draw);
+document.addEventListener("touchmove", draw);
 
-document.addEventListener("touchmove", setPosition);
-document.addEventListener("touchmove", setPosition);
+document.addEventListener("touchstart", setPosition);
+//document.addEventListener("mouseenter", setPosition);
 
 
 
 // last known position
 var pos = { x: 0, y: 0 };
 
-var sActiveColor = "#ff0000"; // Default Color RED
-var bIsPenDown = true;
+var activeColor = "#ff0000"; // Default Color RED
+var penDown = true;
 
 //this function will be called every time a key is pressed
 document.onkeypress = function (e) {
     e = e || window.event;
-    sActiveColor = keyPressed(e); //active color is changed so next time draw() is called, it will use whichever is the current active color
+    activeColor = keyPressed(e); //active color is changed so next time draw() is called, it will use whichever is the current active color
 };
 
 
@@ -57,10 +57,10 @@ document.onkeydown = function (e) {
   var iKeyCode = e.keyCode;
   if (iKeyCode == 38) {
     //UP arrow
-    bIsPenDown = false;
+    penDown = false;
   } else if (iKeyCode == 40) {
     //DOWN arrow
-    bIsPenDown = true;
+    penDown = true;
   }
 };
 //NOTE: this function could be combined for the other keys. However in that case
@@ -92,10 +92,10 @@ function keyPressed(key_pressed){
 
 // new position from mouse events
 function setPosition(e) {
-  var oBoundingClientRectangle = canvas.getBoundingClientRect();
+  var rect = canvas.getBoundingClientRect();
 
-    pos.x = e.clientX - oBoundingClientRectangle.left;
-    pos.y = e.clientY - oBoundingClientRectangle.top;
+    pos.x = e.clientX - rect.left;
+    pos.y = e.clientY - rect.top;
 
 
 }
@@ -104,7 +104,7 @@ ctx.strokeStyle = '#ff0000';
 
 function draw(e) {
     //    if (e.buttons !== 1) return; // if mouse is pressed.....
-    if (bIsPenDown) {
+    if (penDown) {
     ctx.beginPath(); // begin the drawing path
 
 
@@ -112,7 +112,7 @@ function draw(e) {
 
     ctx.lineCap = "square"; // rounded end cap
 
-    ctx.strokeStyle = sActiveColor;
+    ctx.strokeStyle = activeColor;
 
     ctx.moveTo(pos.x, pos.y); // from position
     setPosition(e);
