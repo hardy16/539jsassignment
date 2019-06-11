@@ -13,27 +13,28 @@
         <link rel="stylesheet" href="css/style.css">
 
         <script>
-            
+
         </script>
     </head>
 
     <!--    <input id="hex" placeholder="enter hex color">-->
+    <body>
+        <canvas id="draw"></canvas>
 
-    <canvas id="draw"></canvas>
+        <p >
+            The"b" key for blue, 
+            the "g" key for green, 
+            the "r" key for red, 
+            the "y" key for yellow</p>
 
-    <p >
-        The"b" key for blue, 
-        the "g" key for green, 
-        the "r" key for red, 
-        the "y" key for yellow</p>
+        <script src="Javascript/code_script.js"></script>
 
-    <script src="Javascript/code_script.js"></script>
+        Color picker: <input type="color" id="myColor" value="#ff0000">
 
-    <p>Click the button to create a Color picker.</p>
+        <button type="button" onclick="colorPicker()">Try it</button>
 
-    <button onclick="colorPicker()">Try it</button>
-
-
+        <p>Click on try it to try new color<br> The color picker works with the key press elements </p>
+    </body>
 
 </html>
 
