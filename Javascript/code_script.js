@@ -13,23 +13,15 @@ function resize() {
 
 
 
-//
-//function colorPicker() {
-//    var x = document.createElement("INPUT");
-//    x.setAttribute("type", "color");
-//    x.setAttribute("value","");
-//    document.body.appendChild(x);
-//    console.log(x);
-//}
-
-
-
 function colorPicker() {
     var x = document.getElementById("myColor");
     var currentVal = x.value;
     activeColor = x.value;
 }
 
+function clearScreen() {
+    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height );
+}
 
 
 // add event listeners to specify when functions should be triggered
