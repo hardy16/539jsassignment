@@ -39,8 +39,8 @@ document.addEventListener("mousedown", setPosition);
 document.addEventListener("mouseenter", setPosition);
 
 
-document.addEventListener("touchstart", draw);
-document.addEventListener("touchmove", setPosition);
+document.addEventListener("touchstart", setPosition);
+document.addEventListener("touchmove", draw);
 //document.addEventListener("mouseenter", setPosition);
 
 
@@ -99,19 +99,25 @@ function keyPressed(key_pressed){
 
 // new position from mouse events
 function setPosition(e) {
-    var rect = canvas.getBoundingClientRect();
-
-    pos.x = e.clientX - rect.left;
-    pos.y = e.clientY - rect.top;
-
-
+	var rect = canvas.getBoundingClientRect();
+	clientX = e.clientX;
+	clientY = e.clientY;
+	if(e.type.includes('touch')){
+		clientX = e.touches[0].clientX;
+		clientY = e.touches[0].clientY;
+	}
+    //pos.x = e.clientX - rect.left;
+    //pos.y = e.clientY - rect.top;
+	
+    pos.x = clientX - rect.left;
+    pos.y = clientY - rect.top;
 }
 
 ctx.strokeStyle = '#ff0000';
 
 function draw(e) {
     //    if (e.buttons !== 1) return; // if mouse is pressed.....
-    if (penDown) {
+	if (penDown) {
         ctx.beginPath(); // begin the drawing path
 
 
