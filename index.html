@@ -7,36 +7,34 @@
     <head>
         <meta charset="utf-8">
         <title>
-            Draw it
+            Drawing Turtle
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
 
-        <script>
-
-        </script>
     </head>
 
     <!--    <input id="hex" placeholder="enter hex color">-->
     <body>
+        <h1>Drawing Turtle</h1>
         <canvas id="draw"></canvas>
 
-        <p >
-            The"b" key for blue, 
+        <input type="color" id="myColor" value="#ff0000">
+
+        <button type="button" onclick="colorPicker()">Try it</button>
+        <p>Color picker  :<i>  Select the color and click on 'Try it' to try new color. The color picker works with the key press elements</i><br>
+            "b" key for blue, 
             the "g" key for green, 
             the "r" key for red, 
-            the "y" key for yellow</p>
+            the "y" key for yellow
+        </p> 
 
         <script src="Javascript/code_script.js"></script>
 
-        Color picker: <input type="color" id="myColor" value="#ff0000">
 
-        <button type="button" onclick="colorPicker()">Try it</button>
 
-        <p>Click on try it to try new color<br> The color picker works with the key press elements </p>
+        <p> </p>
     </body>
 
 </html>
-
-
 
