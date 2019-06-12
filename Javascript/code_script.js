@@ -41,8 +41,6 @@ document.addEventListener("mouseenter", setPosition);
 
 document.addEventListener("touchstart", setPosition);
 document.addEventListener("touchmove", draw);
-//document.addEventListener("mouseenter", setPosition);
-
 
 
 // last known position
