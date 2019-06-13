@@ -1,14 +1,11 @@
-// set canvas id to variable
 var canvas = document.getElementById("draw");
 
-// get canvas 2D context and set it to the correct size
 var ctx = canvas.getContext("2d");
-resize();
+resizeCanvas();
 
-// resize canvas when window is resized
-function resize() {
-    ctx.canvas.width = window.innerWidth * 0.8;
-    ctx.canvas.height = window.innerHeight * 0.8;
+function resizeCanvas() {
+    ctx.canvas.width = window.innerWidth * 0.8; 
+    ctx.canvas.height = window.innerHeight * 0.8; //I tried using 80% in the css by using width 80% but it was a problem with mouse position. Hence the canvas is adjusted in JS instead of CSS. 
 }
 
 
@@ -24,54 +21,45 @@ function clearScreen() {
 }
 
 
-// add event listeners to specify when functions should be triggered
-window.addEventListener("resize", resize);
+window.addEventListener("resize", resizeCanvas);
 document.addEventListener("mousemove", draw);
 document.addEventListener("mousedown", setPosition);
 document.addEventListener("mouseenter", setPosition);
 
-
+//For mobile
 document.addEventListener("touchstart", setPosition);
 document.addEventListener("touchmove", draw);
 
 
-// last known position
-var pos = { x: 0, y: 0 };
+var positionLast = { x: 0, y: 0 };
 
 var activeColor = "#ff0000"; // Default Color RED
-var penDown = true;
+var penDown = true; //flag to make sure draw() runs on right press
 
-//this function will be called every time a key is pressed
+
 document.onkeypress = function (e) {
     e = e || window.event;
-    activeColor = keyPressed(e); //active color is changed so next time draw() is called, it will use whichever is the current active color
+    activeColor = keyPressed(e); //active color changed 
 };
 
 
-//Arrow keys are only detected by onkeydown
-document.onkeydown = function (e) {
+document.onkeydown = function (e) { //Arrow keys are only detected by onkeydown
     var iKeyCode = e.keyCode;
-    if (iKeyCode == 38) {
-        //UP arrow
+    if (iKeyCode == 38) { //UP arrow
         penDown = false;
-    } else if (iKeyCode == 40) {
-        //DOWN arrow
+    } else if (iKeyCode == 40) { //DOWN arrow
         penDown = true;
-		setPosition(e);
+        setPosition(e);
     }
 };
-//NOTE: this function could be combined for the other keys. However in that case
-// charCode was required, in this case keyCode is required hence kept it separate for now.
 
 function keyPressed(key_pressed){
-    var keyPressedcode = key_pressed.charCode || key_pressed.keyCode; //NOTE: I read that keyCode is less reliable so te change kela for the time being
-
-
+    var keyPressedcode = key_pressed.charCode || key_pressed.keyCode; 
 
     if (keyPressedcode == 114 || keyPressedcode == 82){
         return '#ff0000 ';
     }
-    else if (keyPressedcode == 66 || keyPressedcode == 98){ //IMP: 'B' and 'b' have different charCodes so made this change
+    else if (keyPressedcode == 66 || keyPressedcode == 98){ //IMP: 'B' and 'b' have different charCodes hence 2 values
         return '#0000ff';
     }
     else if (keyPressedcode == 103 || keyPressedcode == 71){ //green
@@ -85,42 +73,50 @@ function keyPressed(key_pressed){
         console.log('space pressed');
     }
 
+//    else if (keyPressedcode == 38){
+//        penDown = false;
+//    }
+//    else if (keyPressedcode == 40){
+//        penDown = true;
+//        setPosition(e);
+//    }
+
 }
 
-// new position from mouse events
+
 function setPosition(e) {
-	var rect = canvas.getBoundingClientRect();
-	clientX = e.clientX;
-	clientY = e.clientY;
-	if(e.type.includes('touch')){
-		clientX = e.touches[0].clientX;
-		clientY = e.touches[0].clientY;
-	}
-    //pos.x = e.clientX - rect.left;
-    //pos.y = e.clientY - rect.top;
-	
-    pos.x = clientX - rect.left;
-    pos.y = clientY - rect.top;
+    var rect = canvas.getBoundingClientRect();
+    clientX = e.clientX;
+    clientY = e.clientY;
+    if(e.type.includes('touch')){
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    }
+    //positionLast.x = e.clientX - rect.left;
+    //positionLast.y = e.clientY - rect.top;
+
+    positionLast.x = clientX - rect.left;
+    positionLast.y = clientY - rect.top;
 }
 
 ctx.strokeStyle = '#ff0000';
 
 function draw(e) {
-    //    if (e.buttons !== 1) return; // if mouse is pressed.....
-	if (penDown) {
-        ctx.beginPath(); // begin the drawing path
+   
+    if (penDown) {
+        ctx.beginPath(); 
 
 
-        ctx.lineWidth = 30; // width of line
+        ctx.lineWidth = 30; 
 
-        ctx.lineCap = "square"; // rounded end cap
+        ctx.lineCap = "square"; 
 
         ctx.strokeStyle = activeColor;
 
-        ctx.moveTo(pos.x, pos.y); // from position
+        ctx.moveTo(positionLast.x, positionLast.y);
         setPosition(e);
-        ctx.lineTo(pos.x, pos.y); // to position
-        ctx.stroke(); // draw it!
+        ctx.lineTo(positionLast.x, positionLast.y); 
+        ctx.stroke();
         ctx.closePath();
     }
 }
